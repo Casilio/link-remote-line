@@ -1,1 +1,1 @@
-command! LinkRemoteLine lua require("link-remote-line").link()
+command! LinkRemoteLine lua require("link-remote-line").generateLink()

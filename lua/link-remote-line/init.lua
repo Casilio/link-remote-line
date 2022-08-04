@@ -1,6 +1,9 @@
+-- module object
 local M = {}
 
-function M.link()
+-- define "public" function
+function M.generateLink()
+  -- use io.popen():read() to execute shell command
   local origin = io.popen("git remote get-url origin"):read()
   local url = ""
 
@@ -15,9 +18,9 @@ function M.link()
   end
 
   local branch = io.popen("git branch --show-current"):read()
-  local filename = vim.fn.expand('%')
+  local filename = vim.fn.expand('%') -- relative path (from the working directory) to the current file
 
-  local line = vim.fn.line(".")
+  local line = vim.fn.line(".") -- line number
   local link = string.format("%s/blob/%s/%s#L%s", url, branch, filename, line)
 
   vim.fn.setreg("+p", link)
@@ -35,6 +38,5 @@ end
 function chopGitSuffix(url)
   return url:gsub(".git$", "")
 end
-
 
 return M
